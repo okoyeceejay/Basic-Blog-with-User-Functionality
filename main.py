@@ -62,7 +62,7 @@ def admin_only(f):
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -255,5 +255,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    debug = os.getenv('FLASK_DEBUG', 'False').lower() in ('1', 'true')
-    app.run(debug=debug, port=int(os.getenv('PORT', 5002)))
+    app.run(debug=False)
